@@ -63,7 +63,7 @@ module.exports = {
     ],
 
     vendor: [
-      'apollo-client-context',
+      'apollo-link-context',
       'element-ui',
       'vue-i18n',
     ],
