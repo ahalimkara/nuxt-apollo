@@ -1,0 +1,53 @@
+$main-color: #262a25 !default;
+
+html {
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  color: $main-color;
+  background: #f0f2f5;
+}
+
+* {
+  margin: 0;
+}
+
+ul > li {
+  list-style: none;
+}
+
+a {
+  color: $main-color;
+  text-decoration: none;
+}
+
+a:hover, a:active, a:focus {
+  color: #000;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix:after, .clearfix:before {
+  display: table;
+  content: "";
+}
+
+.container {
+  max-width: 1200px;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (max-width: 768px) {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  @media (min-width: 1200px) {
+    max-width: 1140px;
+  }
+}
