@@ -5,18 +5,18 @@
 </template>
 
 <script>
-  // import AppLogo from '../components/AppLogo.vue'
+  // import viewer from '../graphql/query/viewer.gql'
 
   export default {
     // apollo: {
-    //   allUsers: {
+    //   viewer: {
     //     prefetch: true,
-    //     query: allUsers,
-    //   }
+    //     query: viewer,
+    //   },
     // },
     components: {
       // AppLogo
-    }
+    },
   }
 </script>
 

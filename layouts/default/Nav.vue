@@ -9,8 +9,8 @@
           <el-button type="text">Nuxt Apollo</el-button>
         </nuxt-link>
         <div class="el-col-nav">
-          <auth-nav v-if="isAuth" />
-          <guest-nav v-if="!isAuth" />
+          <auth-nav v-if="$store.state.accessToken" />
+          <guest-nav v-if="!$store.state.accessToken" />
         </div>
       </el-row>
     </div>
@@ -19,13 +19,14 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import { willPrefetch } from 'vue-apollo'
 
   import viewer from '../../graphql/query/viewer.gql'
 
   import GuestNav from './GuestNav'
   import AuthNav from './AuthNav'
 
-  export default {
+  export default willPrefetch({
     components: {
       AuthNav,
       GuestNav,
@@ -39,10 +40,9 @@
       viewer: {
         prefetch: true,
         query: viewer,
-        // fetchPolicy: 'cache',
       },
     },
-  }
+  })
 </script>
 
 <style scoped>

@@ -17,6 +17,6 @@ export default ({ app, store, req }) => {
     messages: {
       en: require('../translations/en.json'),
       zh: require('../translations/zh.json'),
-    }
+    },
   })
 }

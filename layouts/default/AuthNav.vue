@@ -6,7 +6,9 @@
       </nuxt-link>
     </li>
     <li>
-      <a>
+      <a
+        href=""
+        @click.prevent="logout">
         Logout
       </a>
     </li>
@@ -14,7 +16,21 @@
 </template>
 
 <script>
-  export default {}
+  import Cookies from 'js-cookie'
+
+  export default {
+    methods: {
+      async resetStore() {
+        await this.$apollo.provider.defaultClient.resetStore()
+      },
+      logout() {
+        Cookies.remove('accessToken')
+        this.$store.commit('SET_ACCESS_TOKEN', null)
+        this.resetStore()
+        this.$router.push('/login')
+      },
+    },
+  }
 </script>
 
 <style scoped>

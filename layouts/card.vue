@@ -21,6 +21,6 @@
           lang: this.$store.state.locale,
         },
       }
-    }
+    },
   }
 </script>

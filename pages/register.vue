@@ -1,7 +1,7 @@
 <template>
   <el-card class="register-card">
     <div slot="header">
-      <span>Sign in</span>
+      <span>Sign up</span>
     </div>
     <div>
       <el-alert
@@ -11,19 +11,24 @@
         :key="key"
         type="error" />
       <el-form
-        :model="loginForm"
+        :model="registerForm"
         :rules="rules"
-        ref="loginForm"
+        ref="registerForm"
         class="login-form">
+        <el-form-item prop="name">
+          <el-input
+            v-model="registerForm.name"
+            placeholder="Name" />
+        </el-form-item>
         <el-form-item prop="email">
           <el-input
-            v-model="loginForm.email"
+            v-model="registerForm.email"
             placeholder="E-mail" />
         </el-form-item>
         <el-form-item prop="password">
           <el-input
             type="password"
-            v-model="loginForm.password"
+            v-model="registerForm.password"
             placeholder="Password"
             auto-complete="off" />
         </el-form-item>
@@ -34,14 +39,9 @@
           :loading="loading>0">Submit
         </el-button>
         <div class="clearfix">
-          Or
-          <nuxt-link :to="'/register'">
-            <el-button type="text">register now!</el-button>
-          </nuxt-link>
-          <nuxt-link
-            :to="'/password/reset'"
-            class="forgot-btn">
-            <el-button type="text">Forgot password</el-button>
+          Already have an account?
+          <nuxt-link :to="'/login'">
+            <el-button type="text">Login</el-button>
           </nuxt-link>
         </div>
       </el-form>
@@ -51,6 +51,7 @@
 
 <script>
   import Cookies from 'js-cookie'
+  import register from '../graphql/mutation/register.gql'
   import login from '../graphql/mutation/login.gql'
 
   export default {
@@ -60,11 +61,15 @@
       return {
         loading: 0,
         errors: [],
-        loginForm: {
+        registerForm: {
+          name: '',
           email: '',
           password: '',
         },
         rules: {
+          name: [
+            { required: true, message: 'This field is required', trigger: 'submit' },
+          ],
           email: [
             { required: true, message: 'This field is required', trigger: 'submit' },
           ],
@@ -76,14 +81,19 @@
     },
     methods: {
       submit() {
-        this.$refs['loginForm'].validate(async valid => {
+        this.$refs['registerForm'].validate(async valid => {
           if (valid) {
             this.loading++
 
             try {
+              const { name, email, password } = this.registerForm
+              await this.$apollo.mutate({
+                mutation: register,
+                variables: { name, payload: { email: { email, password } } },
+              })
               const result = await this.$apollo.mutate({
                 mutation: login,
-                variables: { payload: { email: this.loginForm.email, password: this.loginForm.password } },
+                variables: { payload: { email, password } },
               })
 
               Cookies.set('accessToken', result.data.login.accessToken, { expires: 365 })
@@ -117,10 +127,6 @@
 
   .submit-button {
     width: 100%;
-  }
-
-  .forgot-btn {
-    float: right;
   }
 
   .error {

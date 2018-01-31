@@ -6,7 +6,7 @@ export const state = () => ({
 })
 
 export const getters = {
-  isAuth(state) {
+  isAuthenticated(state) {
     return Boolean(state.accessToken)
   },
   isGuest(state) {

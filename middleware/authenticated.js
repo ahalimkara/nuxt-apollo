@@ -1,5 +1,5 @@
-export default function ({ store: { getters }, redirect }) {
-  if (!getters.isAuth) {
+export default function ({ store: { state }, redirect }) {
+  if (!state.accessToken) {
     return redirect('/login')
   }
 }

@@ -37,7 +37,7 @@ For detailed explanation on how things work, checkout the [Nuxt.js docs](https:/
 ### Chrome DevTools (55+)
 node v8.5.0+
 
-`yarn inspect`
+`yarn dev --inspect`
 
 Go to: `chrome://inspect/`
 
