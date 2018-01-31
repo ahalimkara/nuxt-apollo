@@ -1,11 +1,25 @@
 <template>
   <footer class="container">
-    Nuxt Apollo &copy; {{ new Date().getFullYear() }} All rights reserved
+    {{ APP_NAME }} &copy; {{ new Date().getFullYear() + ' ' + $t('All rights reserved') }}
+
+    <footer-locales />
   </footer>
 </template>
 
 <script>
-  export default {}
+  import { APP_NAME } from '../../config'
+  import FooterLocales from '../../components/FooterLocales'
+
+  export default {
+    components: {
+      FooterLocales,
+    },
+    data() {
+      return {
+        APP_NAME,
+      }
+    },
+  }
 </script>
 
 <style scoped>

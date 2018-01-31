@@ -2,12 +2,9 @@
   <div class="default-nav">
     <div class="container">
       <el-row type="flex">
-        <nuxt-link
-          class="el-col-logo nav-item"
-          :to="'/'"
-        >
-          <el-button type="text">Nuxt Apollo</el-button>
-        </nuxt-link>
+        <app-link class="el-col-logo nav-item">
+          <el-button type="text">{{ APP_NAME }}</el-button>
+        </app-link>
         <div class="el-col-nav">
           <auth-nav v-if="$store.state.accessToken" />
           <guest-nav v-if="!$store.state.accessToken" />
@@ -21,13 +18,21 @@
   import { mapGetters } from 'vuex'
   import { willPrefetch } from 'vue-apollo'
 
+  import { APP_NAME } from '../../config'
   import viewer from '../../graphql/query/viewer.gql'
 
+  import AppLink from '../../components/app-link'
   import GuestNav from './GuestNav'
   import AuthNav from './AuthNav'
 
   export default willPrefetch({
+    data() {
+      return {
+        APP_NAME,
+      }
+    },
     components: {
+      AppLink,
       AuthNav,
       GuestNav,
     },

@@ -1,20 +1,26 @@
 <template>
   <ul class="nav-items">
     <li>
-      <nuxt-link :to="'/login'">
-        Sign in
-      </nuxt-link>
+      <app-link to="/login">
+        {{ $t('Sign in') }}
+      </app-link>
     </li>
     <li>
-      <nuxt-link :to="'/register'">
-        <el-button type="primary">Sign up</el-button>
-      </nuxt-link>
+      <app-link to="/register">
+        <el-button type="primary">{{ $t('Sign up') }}</el-button>
+      </app-link>
     </li>
   </ul>
 </template>
 
 <script>
-  export default {}
+  import AppLink from '../../components/app-link'
+
+  export default {
+    components: {
+      AppLink,
+    },
+  }
 </script>
 
 <style scoped>

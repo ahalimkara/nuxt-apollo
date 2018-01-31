@@ -5,12 +5,13 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { parse } from 'cookie'
 
 import ApolloLogger from './ApolloLogger'
+import { GRAPHQL_API } from '../../config'
 
 export default ctx => {
   const loggerLink = process.env.NODE_ENV !== 'production' ? [new ApolloLogger()] : []
 
   const httpLink = new HttpLink({
-    uri: 'https://api.graph.cool/simple/v1/cjca0zkoj0fp301974g00ofxy',
+    uri: GRAPHQL_API,
     credentials: 'same-origin',
   })
 

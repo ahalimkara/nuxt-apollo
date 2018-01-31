@@ -1,15 +1,15 @@
 <template>
   <ul class="nav-items">
     <li>
-      <nuxt-link :to="'/profile'">
-        Profile
-      </nuxt-link>
+      <app-link to="/profile">
+        {{ $t('Profile') }}
+      </app-link>
     </li>
     <li>
       <a
         href=""
         @click.prevent="logout">
-        Logout
+        {{ $t('Logout') }}
       </a>
     </li>
   </ul>
@@ -18,7 +18,12 @@
 <script>
   import Cookies from 'js-cookie'
 
+  import AppLink from '../../components/app-link'
+
   export default {
+    components: {
+      AppLink,
+    },
     methods: {
       async resetStore() {
         await this.$apollo.provider.defaultClient.resetStore()
@@ -27,7 +32,8 @@
         Cookies.remove('accessToken')
         this.$store.commit('SET_ACCESS_TOKEN', null)
         this.resetStore()
-        this.$router.push('/login')
+        const locale = this.$route.params.locale || ''
+        this.$router.push(`/${locale}/login`.replace(/^\/+/, '/'))
       },
     },
   }

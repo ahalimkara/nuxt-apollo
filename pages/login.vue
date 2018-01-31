@@ -1,7 +1,7 @@
 <template>
   <el-card class="register-card">
     <div slot="header">
-      <span>Sign in</span>
+      {{ $t('Sign in') }}
     </div>
     <div>
       <el-alert
@@ -15,34 +15,39 @@
         :rules="rules"
         ref="loginForm"
         class="login-form">
+
         <el-form-item prop="email">
           <el-input
             v-model="loginForm.email"
-            placeholder="E-mail" />
+            :placeholder="$t('Email')" />
         </el-form-item>
+
         <el-form-item prop="password">
           <el-input
             type="password"
             v-model="loginForm.password"
-            placeholder="Password"
+            :placeholder="$t('Password')"
             auto-complete="off" />
         </el-form-item>
+
         <el-button
           type="primary"
           class="submit-button"
           @click="submit()"
-          :loading="loading>0">Submit
+          :loading="loading>0">
+          {{ $t('Login') }}
         </el-button>
+
         <div class="clearfix">
-          Or
-          <nuxt-link :to="'/register'">
-            <el-button type="text">register now!</el-button>
-          </nuxt-link>
-          <nuxt-link
-            :to="'/password/reset'"
+          {{ $t('Or') }}
+          <app-link to="/register">
+            <el-button type="text">{{ $t('register now!') }}</el-button>
+          </app-link>
+          <app-link
+            to="/password/reset"
             class="forgot-btn">
-            <el-button type="text">Forgot password</el-button>
-          </nuxt-link>
+            <el-button type="text">{{ $t('Forgot password') }}</el-button>
+          </app-link>
         </div>
       </el-form>
     </div>
@@ -52,10 +57,14 @@
 <script>
   import Cookies from 'js-cookie'
   import login from '../graphql/mutation/login.gql'
+  import AppLink from '../components/app-link'
 
   export default {
     layout: 'card',
     middleware: 'guest',
+    components: {
+      AppLink,
+    },
     data() {
       return {
         loading: 0,
@@ -90,7 +99,7 @@
               this.$store.commit('SET_ACCESS_TOKEN', result.data.login.accessToken)
               // https://github.com/apollographql/apollo-client/issues/2919
               await this.$apollo.provider.defaultClient.resetStore()
-              this.$router.push('/')
+              this.$router.push('/' + (this.$route.params.locale || ''))
 
             } catch (error) {
               this.loading--

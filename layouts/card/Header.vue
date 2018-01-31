@@ -1,16 +1,25 @@
 <template>
   <header>
-    <nuxt-link
-      class="logo"
-      :to="'/'"
-    >
-      <el-button type="text">Nuxt Apollo</el-button>
-    </nuxt-link>
+    <app-link class="logo">
+      <el-button type="text">{{ APP_NAME }}</el-button>
+    </app-link>
   </header>
 </template>
 
 <script>
-  export default {}
+  import { APP_NAME } from '../../config'
+  import AppLink from '../../components/app-link'
+
+  export default {
+    components: {
+      AppLink,
+    },
+    data() {
+      return {
+        APP_NAME,
+      }
+    },
+  }
 </script>
 
 <style scoped>

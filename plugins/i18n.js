@@ -1,22 +1,25 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import Negotiator from 'negotiator'
+
+import { DEFAULT_LOCALE, AVAILABLE_LOCALES } from '../config'
 
 Vue.use(VueI18n)
 
 export default ({ app, store, req }) => {
   if (process.server) {
-    const negotiator = new Negotiator(req)
-    const locale = negotiator.language(store.state.locales)
-    store.commit('SET_LOCALE', locale || 'en')
+    const pathRegExp = new RegExp(`^(/(${AVAILABLE_LOCALES.join('|')}))?(/.*)?$`)
+    const locale = req.originalUrl.match(pathRegExp)[2] || DEFAULT_LOCALE
+    store.commit('SET_LOCALE', locale)
   }
 
+  const messages = {}
+  AVAILABLE_LOCALES.forEach(l => {
+    messages[l] = require(`../translations/${l}.json`)
+  })
+
   app.i18n = new VueI18n({
-    locale: store.state.locale || 'en',
-    fallbackLocale: 'en',
-    messages: {
-      en: require('../translations/en.json'),
-      zh: require('../translations/zh.json'),
-    },
+    locale: store.state.locale || DEFAULT_LOCALE,
+    fallbackLocale: DEFAULT_LOCALE,
+    messages,
   })
 }

@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    Profile {{ viewer.name }}
+    {{ $t('Profile') + ' ' + viewer.name }}
   </section>
 </template>
 
@@ -18,7 +18,9 @@
   }
 </script>
 
-<style>
+<style scoped>
   .container {
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 </style>

@@ -1,26 +1,25 @@
 <template>
   <section class="container">
-    Welcome
+    {{ $t('Welcome {name}', { name: viewer && viewer.name }) }}
   </section>
 </template>
 
 <script>
-  // import viewer from '../graphql/query/viewer.gql'
+  import viewer from '../graphql/query/viewer.gql'
 
   export default {
-    // apollo: {
-    //   viewer: {
-    //     prefetch: true,
-    //     query: viewer,
-    //   },
-    // },
-    components: {
-      // AppLogo
+    apollo: {
+      viewer: {
+        prefetch: true,
+        query: viewer,
+      },
     },
   }
 </script>
 
-<style>
+<style scoped>
   .container {
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 </style>

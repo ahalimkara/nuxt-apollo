@@ -1,8 +1,9 @@
+import { DEFAULT_LOCALE, AVAILABLE_LOCALES } from '../config'
+
 export const state = () => ({
   viewer: null,
-  locale: null,
+  locale: DEFAULT_LOCALE,
   accessToken: null,
-  locales: ['en', 'zh'],
 })
 
 export const getters = {
@@ -16,7 +17,7 @@ export const getters = {
 
 export const mutations = {
   SET_LOCALE(state, locale) {
-    if (state.locales.indexOf(locale) !== -1) {
+    if (AVAILABLE_LOCALES.indexOf(locale) !== -1) {
       state.locale = locale
     }
   },
