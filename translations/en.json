@@ -1,3 +1,19 @@
 {
-  "Welcome {name}": "Welcome {name}"
+  "Welcome {name}": "Welcome {name}",
+  "Profile": "Profile",
+  "Login": "Login",
+  "Sign in": "Sign in",
+  "Logout": "Logout",
+  "Sign up": "Sign up",
+  "Register": "Register",
+  "Name": "Name",
+  "Email": "Email",
+  "Password": "Password",
+  "Confirm Password": "Confirm Password",
+  "Or": "Or",
+  "register now!": "register now!",
+  "Forgot password": "Forgot password",
+  "Already have an account?": "Already have an account?",
+  "This field is required": "This field is required",
+  "All rights reserved": "All rights reserved"
 }

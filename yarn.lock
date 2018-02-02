@@ -5209,6 +5209,10 @@ number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
+nuxt-routes@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/nuxt-routes/-/nuxt-routes-0.0.6.tgz#7f9feb534aa8ce83820faabb0802d65b15483a6c"
+
 nuxt@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-1.1.1.tgz#a4fbeafb243b8431c317834c013a8b7d0d7b74f1"

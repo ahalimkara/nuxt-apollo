@@ -2,7 +2,9 @@
   <div class="default-nav">
     <div class="container">
       <el-row type="flex">
-        <app-link class="el-col-logo nav-item">
+        <app-link
+          class="el-col-logo nav-item"
+          to="/">
           <el-button type="text">{{ APP_NAME }}</el-button>
         </app-link>
         <div class="el-col-nav">

@@ -1,5 +1,4 @@
 const webpack = require('webpack')
-const config = require('./config')
 
 module.exports = {
   /*
@@ -23,21 +22,18 @@ module.exports = {
     // {src: '@/plugins/clipboard', ssr: false},
   ],
 
-  modules: [['@nuxtjs/apollo', {
-    clientConfigs: {
-      default: '~/graphql/apollo/defaultClient.js',
-    },
-  }]],
+  modules: [
+    ['nuxt-routes', {
+      routes: require('./server/routes'),
+    }],
+    ['@nuxtjs/apollo', {
+      clientConfigs: {
+        default: '~/graphql/apollo/defaultClient.js',
+      },
+    }]],
 
   router: {
     middleware: 'check-auth',
-    extendRoutes (routes, resolve) {
-      const locale = `/:locale(${config.AVAILABLE_LOCALES.join('|')})?`
-
-      routes.forEach(r => {
-        r.path = locale + r.path
-      })
-    },
   },
 
   /*

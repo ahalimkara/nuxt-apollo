@@ -28,6 +28,7 @@
     "graphql-tag": "^2.6.1",
     "js-cookie": "^2.2.0",
     "nuxt": "^1.0.0",
+    "nuxt-routes": "^0.0.6",
     "vue-apollo": "^3.0.0-alpha.3",
     "vue-i18n": "^7.4.1"
   },

@@ -1,5 +1,5 @@
-export default function ({ store: { state }, redirect }) {
+export default function ({ store: { state }, route, redirect }) {
   if (state.accessToken) {
-    return redirect('/')
+    return redirect('/' + (route.params.locale || ''))
   }
 }

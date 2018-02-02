@@ -1,6 +1,8 @@
 <template>
   <header>
-    <app-link class="logo">
+    <app-link
+      class="logo"
+      to="/">
       <el-button type="text">{{ APP_NAME }}</el-button>
     </app-link>
   </header>
