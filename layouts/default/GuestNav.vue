@@ -1,43 +1,37 @@
 <template>
-  <ul class="nav-items">
-    <li>
-      <app-link to="/login">
+  <Menu mode="horizontal" class="menu">
+    <MenuItem>
+      <Link to="/login">
         {{ $t('Sign in') }}
-      </app-link>
-    </li>
-    <li>
-      <app-link to="/register">
-        <el-button type="primary">{{ $t('Sign up') }}</el-button>
-      </app-link>
-    </li>
-  </ul>
+      </Link>
+    </MenuItem>
+    <MenuItem>
+      <Link to="/register">
+        {{ $t('Sign up') }}
+      </Link>
+    </MenuItem>
+  </Menu>
 </template>
 
-<script>
-  import AppLink from '../../components/app-link'
+<script lang="ts">
+import Vue from 'vue'
+import { Menu } from 'ant-design-vue'
 
-  export default {
-    components: {
-      AppLink,
-    },
-  }
+import Link from '../../src/components/Link.vue'
+
+export default Vue.extend({
+  components: {
+    Link,
+    Menu,
+    MenuItem: Menu.Item,
+  },
+})
 </script>
 
 <style scoped>
-  .nav-items {
-    display: inline-block;
-  }
-
-  .nav-items li {
-    line-height: 60px;
-    display: inline-block;
-  }
-
-  .nav-items > li {
-    margin-left: 20px;
-  }
-
-  .nav-items li:first-child {
-    margin-left: 0;
-  }
+.menu {
+  line-height: 62px;
+  border-bottom: 0;
+  max-width: 1024px;
+}
 </style>

@@ -1,5 +1,0 @@
-mutation register($name: String!, $payload: AuthProviderSignupData!) {
-  register: createUser(name: $name, authProvider: $payload) {
-    id
-  }
-}

@@ -15,5 +15,6 @@
   "Forgot password": "Forgot password",
   "Already have an account?": "Already have an account?",
   "This field is required": "This field is required",
-  "All rights reserved": "All rights reserved"
+  "Please input a valid email": "Please input a valid email",
+  "{year} All rights reserved": "{year} All rights reserved"
 }

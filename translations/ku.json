@@ -15,5 +15,6 @@
   "Forgot password": "Şîfreya xwe ji bîr kir?",
   "Already have an account?": "Hesabê te heye?",
   "This field is required": "Ev pêdivî ye",
-  "All rights reserved": "Hemî mafên parastî"
+  "Please input a valid email": "Ji kerema xwe e-nameyek derbasdar binivîsin",
+  "{year} All rights reserved": "{year} Hemî mafên parastî"
 }

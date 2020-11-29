@@ -1,36 +1,35 @@
 # Nuxt Apollo
-[WIP] Vue, Nuxt.js, GraphQL, Apollo Client starter kit.
+[WIP] Vue, Nuxt.js, GraphQL, Apollo Client, TypeScript, Ant Design starter kit.
 
 ## Build Setup
 
 ``` bash
 # install dependencies
-$ npm install # Or yarn
+$ yarn
 
 # serve with hot reload at localhost:3000
-$ npm run dev
+$ yarn dev
 
 # build for production and launch server
-$ npm run build
-$ npm start
+$ yarn build
+$ yarn start
 
 # generate static project
-$ npm run generate
+$ yarn generate
 ```
 
-GraphQL Api: https://api.graph.cool/simple/v1/cjca0zkoj0fp301974g00ofxy
-
-For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
+GraphQL Api: 
+Online demo: 
 
 ## Features
 - Authentication
 - Internationalization
-- Server side rendering
+- Server Side Rendering
 - Code splitting
 - File Upload (WIP)
 - SEO Friendly
 - Hot Module Replacement (HMR)
-- [Element UI](http://element.eleme.io/)
+- [Ant Design Vue](https://www.antdv.com/)
 
 ## Debug
 
@@ -54,4 +53,4 @@ Add breakpoints and hit the debug button.
 
 ## Code Design
 - Keep it simple
-- Use stateless components as much as possible
+- Functional components

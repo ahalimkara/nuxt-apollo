@@ -1,5 +1,0 @@
-mutation login($payload: AUTH_PROVIDER_EMAIL) {
-  login: signinUser(email: $payload) {
-    accessToken: token
-  }
-}

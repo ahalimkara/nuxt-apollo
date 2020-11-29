@@ -1,46 +1,39 @@
 <template>
   <footer class="container">
-    <el-row type="flex">
-      <div class="el-col-copy">
-        {{ APP_NAME }} &copy; {{ new Date().getFullYear() + ' ' + $t('All rights reserved') }}
-      </div>
-      <div class="el-col-locales">
-        <footer-locales />
-      </div>
-    </el-row>
+    <Row type="flex">
+      <Col flex="auto">
+        &copy; {{ $t('{year} All rights reserved', { year }) }}
+      </Col>
+      <Col flex="none">
+        <FooterLocales />
+      </Col>
+    </Row>
   </footer>
 </template>
 
-<script>
-  import { APP_NAME } from '../../config'
-  import FooterLocales from '../../components/FooterLocales'
+<script lang="ts">
+import Vue from 'vue'
+import { Col, Row } from 'ant-design-vue'
 
-  export default {
-    components: {
-      FooterLocales,
-    },
-    data() {
-      return {
-        APP_NAME,
-      }
-    },
-  }
+import FooterLocales from '../../src/components/FooterLocales.vue'
+
+export default Vue.extend({
+  components: {
+    FooterLocales,
+    Col,
+    Row,
+  },
+  data() {
+    return {
+      year: new Date().getFullYear(),
+    }
+  },
+})
 </script>
 
 <style scoped>
-  footer {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    color: #909090;
-    font-size: 14px;
-  }
-
-  .el-col-copy {
-    flex: 1 1 auto;
-  }
-
-  .el-col-locales {
-    flex: 0 0 auto;
-    text-align: right;
-  }
+footer {
+  color: #909090;
+  font-size: 14px;
+}
 </style>

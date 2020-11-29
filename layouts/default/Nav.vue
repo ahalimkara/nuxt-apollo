@@ -1,74 +1,73 @@
 <template>
-  <div class="default-nav">
-    <div class="container">
-      <el-row type="flex">
-        <app-link
-          class="el-col-logo nav-item"
-          to="/">
-          <el-button type="text">{{ APP_NAME }}</el-button>
-        </app-link>
-        <div class="el-col-nav">
-          <auth-nav v-if="$store.state.accessToken" />
-          <guest-nav v-if="!$store.state.accessToken" />
-        </div>
-      </el-row>
-    </div>
-  </div>
+  <LayoutHeader class="header">
+    <Row type="flex" class="nav">
+      <Col flex="auto">
+        <Menu mode="horizontal" :selectable="false" class="menu">
+          <MenuItem>
+            <Link to="/">Nuxt Apollo</Link>
+          </MenuItem>
+        </Menu>
+      </Col>
+      <Col flex="none">
+        <auth-nav v-if="isAuthenticated" />
+        <guest-nav v-else />
+      </Col>
+    </Row>
+  </LayoutHeader>
 </template>
 
-<script>
-  import { mapGetters } from 'vuex'
-  import { willPrefetch } from 'vue-apollo'
+<script lang="ts">
+import Vue from 'vue'
+import { mapGetters } from 'vuex'
+import gql from 'graphql-tag'
+import { Col, Layout, Menu, Row } from 'ant-design-vue'
 
-  import { APP_NAME } from '../../config'
-  import viewer from '../../graphql/query/viewer.gql'
+import Link from '../../src/components/Link.vue'
+import GuestNav from './GuestNav.vue'
+import AuthNav from './AuthNav.vue'
 
-  import AppLink from '../../components/app-link'
-  import GuestNav from './GuestNav'
-  import AuthNav from './AuthNav'
-
-  export default willPrefetch({
-    data() {
-      return {
-        APP_NAME,
-      }
+export default Vue.extend({
+  components: {
+    LayoutHeader: Layout.Header,
+    Menu,
+    MenuItem: Menu.Item,
+    Row,
+    Col,
+    Link,
+    AuthNav,
+    GuestNav,
+  },
+  computed: {
+    ...mapGetters(['isAuthenticated']),
+  },
+  apollo: {
+    viewer: {
+      prefetch: true,
+      query: gql`
+        query {
+          viewer {
+            name
+          }
+        }
+      `,
     },
-    components: {
-      AppLink,
-      AuthNav,
-      GuestNav,
-    },
-    computed: {
-      ...mapGetters([
-        'isAuth',
-      ]),
-    },
-    apollo: {
-      viewer: {
-        prefetch: true,
-        query: viewer,
-      },
-    },
-  })
+  },
+})
 </script>
 
 <style scoped>
-  .default-nav {
-    background-color: #fff;
-    border-bottom: 1px solid #dbe0f0;
-  }
-
-  .el-col-logo {
-    flex: 0 0 auto;
-  }
-
-  .el-col-nav {
-    flex: 1 1 auto;
-    text-align: right;
-  }
-
-  .nav-item, .nav-items li {
-    line-height: 60px;
-    display: inline-block;
-  }
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 0;
+}
+.nav {
+  max-width: 1024px;
+  margin: auto;
+}
+.menu {
+  line-height: 62px;
+  border-bottom: 0;
+  max-width: 1024px;
+}
 </style>

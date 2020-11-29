@@ -1,7 +1,0 @@
-query viewer {
-  viewer: user {
-    id
-    name
-    email
-  }
-}

@@ -1,59 +1,51 @@
 <template>
-  <ul class="nav-items">
-    <li>
-      <app-link to="/profile">
+  <Menu mode="horizontal" :selectable="false" class="menu">
+    <MenuItem>
+      <Link to="/profile">
         {{ $t('Profile') }}
-      </app-link>
-    </li>
-    <li>
-      <a
-        href=""
-        @click.prevent="logout">
+      </Link>
+    </MenuItem>
+    <MenuItem>
+      <a href="" @click.prevent="logout">
         {{ $t('Logout') }}
       </a>
-    </li>
-  </ul>
+    </MenuItem>
+  </Menu>
 </template>
 
-<script>
-  import Cookies from 'js-cookie'
+<script lang="ts">
+import Vue from 'vue'
+import Cookies from 'js-cookie'
+import { Menu } from 'ant-design-vue'
 
-  import AppLink from '../../components/app-link'
+import Link from '../../src/components/Link.vue'
 
-  export default {
-    components: {
-      AppLink,
+export default Vue.extend({
+  components: {
+    Link,
+    Menu,
+    MenuItem: Menu.Item,
+  },
+  methods: {
+    logout() {
+      Cookies.remove('accessToken')
+      this.$store.commit('SET_ACCESS_TOKEN', null)
+
+      this.$apollo.provider.defaultClient.resetStore()
+
+      const locale = this.$route.params.locale || ''
+      const location = locale ? `/${locale}/login` : '/login'
+
+      this.$router.push(location)
     },
-    methods: {
-      async resetStore() {
-        await this.$apollo.provider.defaultClient.resetStore()
-      },
-      logout() {
-        Cookies.remove('accessToken')
-        this.$store.commit('SET_ACCESS_TOKEN', null)
-        this.resetStore()
-        const locale = this.$route.params.locale || ''
-        this.$router.push(`/${locale}/login`.replace(/^\/+/, '/'))
-      },
-    },
-  }
+  },
+})
 </script>
 
 <style scoped>
-  .nav-items {
-    display: inline-block;
-  }
-
-  .nav-items li {
-    line-height: 60px;
-    display: inline-block;
-  }
-
-  .nav-items > li {
-    margin-left: 20px;
-  }
-
-  .nav-items li:first-child {
-    margin-left: 0;
-  }
+.menu {
+  line-height: 62px;
+  border-bottom: 0;
+  max-width: 1024px;
+}
 </style>

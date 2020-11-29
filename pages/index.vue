@@ -1,25 +1,27 @@
 <template>
-  <section class="container">
+  <div class="container">
     {{ $t('Welcome {name}', { name: viewer && viewer.name }) }}
-  </section>
+  </div>
 </template>
 
-<script>
-  import viewer from '../graphql/query/viewer.gql'
+<script lang="ts">
+import Vue from 'vue'
+import gql from 'graphql-tag'
 
-  export default {
-    apollo: {
-      viewer: {
-        prefetch: true,
-        query: viewer,
-      },
+export default Vue.extend({
+  apollo: {
+    viewer: {
+      prefetch: true,
+      query: gql`
+        query {
+          viewer {
+            name
+          }
+        }
+      `,
     },
-  }
+  },
+})
 </script>
 
-<style scoped>
-  .container {
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-</style>
+<style scoped></style>

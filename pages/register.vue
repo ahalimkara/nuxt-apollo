@@ -1,146 +1,195 @@
 <template>
-  <el-card class="register-card">
-    <div slot="header">
-      {{ $t('Sign up') }}
-    </div>
-    <div>
-      <el-alert
-        class="error"
-        v-for="(error, key) in errors"
-        :title="error"
-        :key="key"
-        type="error" />
+  <Form :form="form" class="register-form" @submit.prevent="handleSubmit">
+    <FormItem
+      :validate-status="nameError() ? 'error' : ''"
+      :help="nameError() || ''"
+    >
+      <Input
+        v-decorator="[
+          'name',
+          {
+            rules: [{ required: true, message: $t('This field is required') }],
+          },
+        ]"
+        size="large"
+        autoFocus
+        :placeholder="$t('Name')"
+      >
+        <Icon slot="prefix" type="user" style="color: rgba(0, 0, 0, 0.25)" />
+      </Input>
+    </FormItem>
+    <FormItem
+      :validate-status="emailError() ? 'error' : ''"
+      :help="emailError() || ''"
+    >
+      <Input
+        v-decorator="[
+          'email',
+          {
+            rules: [
+              {
+                required: true,
+                type: 'email',
+                message: $t('Please input a valid email'),
+              },
+            ],
+          },
+        ]"
+        size="large"
+        type="email"
+        :placeholder="$t('Email')"
+      >
+        <Icon slot="prefix" type="mail" style="color: rgba(0, 0, 0, 0.25)" />
+      </Input>
+    </FormItem>
+    <FormItem
+      :validate-status="passwordError() ? 'error' : ''"
+      :help="passwordError() || ''"
+    >
+      <Input
+        v-decorator="[
+          'password',
+          {
+            rules: [
+              { required: true, min: 6, message: $t('This field is required') },
+            ],
+          },
+        ]"
+        size="large"
+        type="password"
+        :placeholder="$t('Password')"
+      >
+        <Icon slot="prefix" type="lock" style="color: rgba(0, 0, 0, 0.25)" />
+      </Input>
+    </FormItem>
+    <FormItem>
+      <Button
+        type="primary"
+        html-type="submit"
+        size="large"
+        block
+        :loading="loading"
+        :disabled="loading || !isMounted || hasErrors(form.getFieldsError())"
+      >
+        {{ $t('Sign up') }}
+      </Button>
+      {{ $t('Or') }}
+      <Link to="/login">{{ $t('Sign in') }}</Link>
 
-      <el-form
-        :model="registerForm"
-        :rules="rules"
-        ref="registerForm"
-        class="login-form">
-
-        <el-form-item prop="name">
-          <el-input
-            v-model="registerForm.name"
-            :placeholder="$t('Name')" />
-        </el-form-item>
-
-        <el-form-item prop="email">
-          <el-input
-            v-model="registerForm.email"
-            :placeholder="$t('Email')" />
-        </el-form-item>
-
-        <el-form-item prop="password">
-          <el-input
-            type="password"
-            v-model="registerForm.password"
-            :placeholder="$t('Password')"
-            auto-complete="off" />
-        </el-form-item>
-
-        <el-button
-          type="primary"
-          class="submit-button"
-          @click="submit()"
-          :loading="loading>0">
-          {{ $t('Register') }}
-        </el-button>
-
-        <div class="clearfix">
-          {{ $t('Already have an account?') }}
-          <app-link to="/login">
-            <el-button type="text">{{ $t('Login') }}</el-button>
-          </app-link>
-        </div>
-      </el-form>
-    </div>
-  </el-card>
+      <Alert v-if="error" :message="error" type="error" show-icon />
+    </FormItem>
+  </Form>
 </template>
 
-<script>
-  import Cookies from 'js-cookie'
-  import register from '../graphql/mutation/register.gql'
-  import login from '../graphql/mutation/login.gql'
-  import AppLink from '../components/app-link'
+<script lang="ts">
+import Vue, { VueConstructor } from 'vue'
+import { Alert, Button, Form, Input, Icon } from 'ant-design-vue'
+import { WrappedFormUtils } from 'ant-design-vue/types/form/form'
+import Cookies from 'js-cookie'
+import gql from 'graphql-tag'
 
-  export default {
-    layout: 'card',
-    middleware: 'guest',
-    components: {
-      AppLink,
+import Link from '../src/components/Link.vue'
+
+export default (Vue as ExtendedVue).extend({
+  layout: 'form',
+  middleware: 'guest',
+  components: {
+    Alert,
+    Button,
+    Form,
+    FormItem: Form.Item,
+    Input,
+    Icon,
+    Link,
+  },
+  data() {
+    return {
+      loading: false,
+      error: null,
+      isMounted: false,
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      // To disabled submit button at the beginning.
+      this.form.validateFields()
+      this.isMounted = true
+    })
+  },
+  beforeCreate() {
+    this.form = this.$form.createForm(this, { name: 'register' })
+  },
+  methods: {
+    nameError(): boolean | object[] {
+      const { getFieldError, isFieldTouched } = this.form
+      return isFieldTouched('name') && getFieldError('name')
     },
-    data() {
-      return {
-        loading: 0,
-        errors: [],
-        registerForm: {
-          name: '',
-          email: '',
-          password: '',
-        },
-        rules: {
-          name: [
-            { required: true, message: 'This field is required', trigger: 'submit' },
-          ],
-          email: [
-            { required: true, message: 'This field is required', trigger: 'submit' },
-          ],
-          password: [
-            { required: true, message: 'This field is required', trigger: 'submit' },
-          ],
-        },
-      }
+    emailError(): boolean | object[] {
+      const { getFieldError, isFieldTouched } = this.form
+      return isFieldTouched('email') && getFieldError('email')
     },
-    methods: {
-      submit() {
-        this.$refs['registerForm'].validate(async valid => {
-          if (valid) {
-            this.loading++
+    passwordError(): boolean | object[] {
+      const { getFieldError, isFieldTouched } = this.form
+      return isFieldTouched('password') && getFieldError('password')
+    },
+    handleSubmit(): void {
+      this.form.validateFields(
+        async (err: Error[], values: Record<string, string>) => {
+          if (!err) {
+            this.loading = true
+            this.error = null
 
             try {
-              const { name, email, password } = this.registerForm
-              await this.$apollo.mutate({
-                mutation: register,
-                variables: { name, payload: { email: { email, password } } },
-              })
               const result = await this.$apollo.mutate({
-                mutation: login,
-                variables: { payload: { email, password } },
+                mutation: gql`
+                  mutation register(
+                    $name: String!
+                    $email: String!
+                    $password: String!
+                  ) {
+                    register(name: $name, email: $email, password: $password) {
+                      accessToken: token
+                    }
+                  }
+                `,
+                variables: {
+                  name: values.name,
+                  email: values.email,
+                  password: values.password,
+                },
               })
+              const { accessToken } = result.data.register
 
-              Cookies.set('accessToken', result.data.login.accessToken, { expires: 365 })
-              this.$store.commit('SET_ACCESS_TOKEN', result.data.login.accessToken)
+              Cookies.set('accessToken', accessToken, {
+                expires: 365,
+              })
+              this.$store.commit('SET_ACCESS_TOKEN', accessToken)
+
               // https://github.com/apollographql/apollo-client/issues/2919
               await this.$apollo.provider.defaultClient.resetStore()
-              this.$router.push('/' + (this.$route.params.locale || ''))
 
-            } catch (error) {
-              this.loading--
-              this.errors.push(error.message)
-              console.log(JSON.stringify(error))
+              this.$router.push('/' + (this.$route.params.locale || ''))
+            } catch ({ graphQLErrors = [], message }) {
+              this.error = graphQLErrors[0]?.message || message
             }
-          } else {
-            return false
+
+            this.loading = false
           }
-        })
-      },
+        }
+      )
     },
-  }
+    hasErrors(fieldsError: Record<string, any>) {
+      return Object.keys(fieldsError).some((field) => fieldsError[field])
+    },
+  },
+})
+
+interface ExtendedVue
+  extends VueConstructor<
+    Vue & {
+      form: WrappedFormUtils
+    }
+  > {}
 </script>
 
-<style scoped>
-  .register-card {
-    max-width: 340px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .submit-button {
-    width: 100%;
-  }
-
-  .error {
-    margin-bottom: 10px;
-  }
-</style>
+<style scoped></style>
