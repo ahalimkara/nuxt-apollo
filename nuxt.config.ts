@@ -1,3 +1,5 @@
+import { Context } from '@nuxt/types'
+
 import config from './src/config'
 
 const locale = `/:locale(${config.AVAILABLE_LOCALES.join('|')})?`
@@ -5,7 +7,7 @@ const locale = `/:locale(${config.AVAILABLE_LOCALES.join('|')})?`
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'nuxt-apollo',
+    title: 'Nuxt Apollo',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -56,6 +58,11 @@ export default {
           },
         ],
       ],
+    },
+    extend(config: any, ctx: Context) {
+      if (ctx.isDev) {
+        config.devtool = 'source-map'
+      }
     },
   },
 
