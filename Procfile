@@ -1,0 +1,1 @@
+web: nuxt-ts start
