@@ -18,8 +18,8 @@ $ yarn start
 $ yarn generate
 ```
 
-GraphQL Api: 
-Online demo: 
+GraphQL Api: [https://gapi.vercel.app/api](https://gapi.vercel.app/api) \
+Online demo: [https://n-a.herokuapp.com](https://n-a.herokuapp.com)
 
 ## Features
 - Authentication
