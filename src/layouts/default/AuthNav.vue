@@ -18,7 +18,7 @@ import Vue from 'vue'
 import Cookies from 'js-cookie'
 import { Menu } from 'ant-design-vue'
 
-import Link from '../../src/components/Link.vue'
+import Link from '../../components/Link.vue'
 
 export default Vue.extend({
   components: {

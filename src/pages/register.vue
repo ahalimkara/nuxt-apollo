@@ -1,5 +1,23 @@
 <template>
-  <Form :form="form" class="login-form" @submit.prevent="handleSubmit">
+  <Form :form="form" class="register-form" @submit.prevent="handleSubmit">
+    <FormItem
+      :validate-status="nameError() ? 'error' : ''"
+      :help="nameError() || ''"
+    >
+      <Input
+        v-decorator="[
+          'name',
+          {
+            rules: [{ required: true, message: $t('This field is required') }],
+          },
+        ]"
+        size="large"
+        autoFocus
+        :placeholder="$t('Name')"
+      >
+        <Icon slot="prefix" type="user" style="color: rgba(0, 0, 0, 0.25)" />
+      </Input>
+    </FormItem>
     <FormItem
       :validate-status="emailError() ? 'error' : ''"
       :help="emailError() || ''"
@@ -8,11 +26,17 @@
         v-decorator="[
           'email',
           {
-            rules: [{ required: true, message: $t('This field is required') }],
+            rules: [
+              {
+                required: true,
+                type: 'email',
+                message: $t('Please input a valid email'),
+              },
+            ],
           },
         ]"
         size="large"
-        autoFocus
+        type="email"
         :placeholder="$t('Email')"
       >
         <Icon slot="prefix" type="mail" style="color: rgba(0, 0, 0, 0.25)" />
@@ -26,7 +50,9 @@
         v-decorator="[
           'password',
           {
-            rules: [{ required: true, message: $t('This field is required') }],
+            rules: [
+              { required: true, min: 6, message: $t('This field is required') },
+            ],
           },
         ]"
         size="large"
@@ -45,10 +71,10 @@
         :loading="loading"
         :disabled="loading || !isMounted || hasErrors(form.getFieldsError())"
       >
-        {{ $t('Sign in') }}
+        {{ $t('Sign up') }}
       </Button>
       {{ $t('Or') }}
-      <Link to="/register">{{ $t('Sign up') }}</Link>
+      <Link to="/login">{{ $t('Sign in') }}</Link>
 
       <Alert v-if="error" :message="error" type="error" show-icon />
     </FormItem>
@@ -62,7 +88,7 @@ import { WrappedFormUtils } from 'ant-design-vue/types/form/form'
 import Cookies from 'js-cookie'
 import gql from 'graphql-tag'
 
-import Link from '../src/components/Link.vue'
+import Link from '../components/Link.vue'
 
 export default (Vue as ExtendedVue).extend({
   layout: 'form',
@@ -91,9 +117,13 @@ export default (Vue as ExtendedVue).extend({
     })
   },
   beforeCreate() {
-    this.form = this.$form.createForm(this, { name: 'login' })
+    this.form = this.$form.createForm(this, { name: 'register' })
   },
   methods: {
+    nameError(): boolean | object[] {
+      const { getFieldError, isFieldTouched } = this.form
+      return isFieldTouched('name') && getFieldError('name')
+    },
     emailError(): boolean | object[] {
       const { getFieldError, isFieldTouched } = this.form
       return isFieldTouched('email') && getFieldError('email')
@@ -112,23 +142,31 @@ export default (Vue as ExtendedVue).extend({
             try {
               const result = await this.$apollo.mutate({
                 mutation: gql`
-                  mutation login($email: String!, $password: String!) {
-                    login(email: $email, password: $password) {
+                  mutation register(
+                    $name: String!
+                    $email: String!
+                    $password: String!
+                  ) {
+                    register(name: $name, email: $email, password: $password) {
                       accessToken: token
                     }
                   }
                 `,
                 variables: {
+                  name: values.name,
                   email: values.email,
                   password: values.password,
                 },
               })
-              const { accessToken } = result.data.login
+              const { accessToken } = result.data.register
 
               Cookies.set('accessToken', accessToken, {
                 expires: 365,
               })
               this.$store.commit('SET_ACCESS_TOKEN', accessToken)
+
+              // https://github.com/apollographql/apollo-client/issues/2919
+              await this.$apollo.provider.defaultClient.resetStore()
 
               this.$router.push('/' + (this.$route.params.locale || ''))
             } catch ({ graphQLErrors = [], message }) {

@@ -1,4 +1,4 @@
-import config, { Locales } from '../src/config'
+import config, { Locales } from '../config'
 
 export const state = () => ({
   viewer: null,

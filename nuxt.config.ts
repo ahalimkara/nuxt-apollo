@@ -22,7 +22,7 @@ export default {
   loading: { color: '#1890ff' },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['@/plugins/i18n'],
+  plugins: ['@/src/plugins/i18n'],
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
@@ -73,5 +73,12 @@ export default {
         route.path = `${locale}${route.path}`
       })
     },
+  },
+
+  dir: {
+    layouts: 'src/layouts',
+    middleware: 'src/middleware',
+    pages: 'src/pages',
+    store: 'src/store',
   },
 }

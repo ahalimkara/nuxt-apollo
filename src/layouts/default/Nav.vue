@@ -22,7 +22,7 @@ import { mapGetters } from 'vuex'
 import gql from 'graphql-tag'
 import { Col, Layout, Menu, Row } from 'ant-design-vue'
 
-import Link from '../../src/components/Link.vue'
+import Link from '../../components/Link.vue'
 import GuestNav from './GuestNav.vue'
 import AuthNav from './AuthNav.vue'
 

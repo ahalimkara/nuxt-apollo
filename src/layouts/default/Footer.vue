@@ -15,7 +15,7 @@
 import Vue from 'vue'
 import { Col, Row } from 'ant-design-vue'
 
-import FooterLocales from '../../src/components/FooterLocales.vue'
+import FooterLocales from '../../components/FooterLocales.vue'
 
 export default Vue.extend({
   components: {

@@ -17,7 +17,7 @@
 import Vue from 'vue'
 import { Menu } from 'ant-design-vue'
 
-import Link from '../../src/components/Link.vue'
+import Link from '../../components/Link.vue'
 
 export default Vue.extend({
   components: {

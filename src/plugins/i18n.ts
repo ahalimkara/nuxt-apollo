@@ -3,7 +3,7 @@ import VueI18n, { LocaleMessages } from 'vue-i18n'
 import { Context } from '@nuxt/types'
 import { IncomingMessage } from 'connect'
 
-import config from '../src/config'
+import config from '../config'
 
 Vue.use(VueI18n)
 
@@ -26,7 +26,7 @@ export default ({ app, store, req }: Context) => {
   const messages: LocaleMessages = {}
 
   AVAILABLE_LOCALES.forEach((locale) => {
-    messages[locale] = require(`../translations/${locale}.json`)
+    messages[locale] = require(`../../translations/${locale}.json`)
   })
 
   app.i18n = new VueI18n({
