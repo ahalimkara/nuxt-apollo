@@ -33,7 +33,6 @@ export default Vue.extend({
 body {
   background: #f0f2f5;
 }
-
 .container {
   width: 1024px;
   max-width: 100%;

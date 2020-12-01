@@ -1,5 +1,3 @@
-import { Context } from '@nuxt/types'
-
 import config from './src/config'
 
 const locale = `/:locale(${config.AVAILABLE_LOCALES.join('|')})?`
@@ -58,11 +56,6 @@ export default {
           },
         ],
       ],
-    },
-    extend(config: any, ctx: Context) {
-      if (ctx.isDev) {
-        config.devtool = 'source-map'
-      }
     },
   },
 
