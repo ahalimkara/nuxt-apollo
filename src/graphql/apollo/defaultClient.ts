@@ -1,6 +1,7 @@
 import { ApolloLink, HttpLink, InMemoryCache } from 'apollo-boost'
 import { setContext } from 'apollo-link-context'
 import { parse } from 'cookie'
+import Cookies from 'js-cookie'
 import { Context } from '@nuxt/types'
 
 import config from '../../config'
@@ -17,8 +18,7 @@ export default (ctx: Context) => {
   const authLink = setContext((_, { headers }) => {
     const token = process.server
       ? parse(ctx.req.headers.cookie || '').accessToken
-      : // @ts-ignore
-        window.__NUXT__.state?.accessToken
+      : Cookies.get('accessToken')
 
     return {
       headers: {

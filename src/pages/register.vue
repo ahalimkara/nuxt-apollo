@@ -91,7 +91,7 @@ import gql from 'graphql-tag'
 import Link from '../components/Link.vue'
 
 export default (Vue as ExtendedVue).extend({
-  layout: 'form',
+  layout: 'auth',
   middleware: 'guest',
   components: {
     Alert,
@@ -161,7 +161,7 @@ export default (Vue as ExtendedVue).extend({
               const { accessToken } = result.data.register
 
               Cookies.set('accessToken', accessToken, {
-                expires: 365,
+                expires: 7,
               })
               this.$store.commit('SET_ACCESS_TOKEN', accessToken)
 

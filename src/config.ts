@@ -16,7 +16,7 @@ const config: Config = {
   DEFAULT_LOCALE: Locales.en,
   AVAILABLE_LOCALES: [Locales.en, Locales.ku],
   LOCALE_NAMES: { en: 'English', ku: 'Kurdî' },
-  GRAPHQL_API: 'https://gql-a.herokuapp.com/graphql',
+  GRAPHQL_API: 'http://localhost:3210/graphql',
 }
 
 export default config

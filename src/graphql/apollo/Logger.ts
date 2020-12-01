@@ -7,7 +7,7 @@ import { NextLink, Operation } from 'apollo-link/lib/types'
 const options = { onlyErrors: false }
 
 interface LoggerFuncParams {
-  operation: any
+  operation: Operation
   response?: FetchResult
   graphQLErrors?: ReadonlyArray<GraphQLError>
   networkError?: any
@@ -19,12 +19,12 @@ const defaultLogger = ({
   graphQLErrors,
   networkError,
 }: LoggerFuncParams) => {
-  const operationType = operation.query.definitions[0].operation
-
   if (graphQLErrors || networkError || (response && !options.onlyErrors)) {
-    console.log(
-      `[Operation] apollo ${operationType} ${operation.operationName}`
-    )
+    operation.query.definitions.forEach((definition) => {
+      const op = 'operation' in definition ? definition.operation : ''
+
+      console.log(`[Operation] apollo ${op} ${operation.operationName || ''}`)
+    })
   }
 
   if (response && !options.onlyErrors) {
@@ -32,13 +32,13 @@ const defaultLogger = ({
   }
 
   if (graphQLErrors) {
-    graphQLErrors.map(({ message, locations, path }) =>
+    graphQLErrors.forEach(({ message, locations, path }) => {
+      const locationsStr = JSON.stringify(locations)
+
       console.error(
-        `[GraphQL Error] Message: "${message}", Locations: ${JSON.stringify(
-          locations
-        )}, Path: "${path}"`
+        `[GraphQL Error] Message: "${message}", Locations: ${locationsStr}, Path: "${path}"`
       )
-    )
+    })
   }
 
   if (networkError) {

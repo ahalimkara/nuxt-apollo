@@ -19,7 +19,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
-import gql from 'graphql-tag'
 import { Col, Layout, Menu, Row } from 'ant-design-vue'
 
 import Link from '../../components/Link.vue'
@@ -39,18 +38,6 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters(['isAuthenticated']),
-  },
-  apollo: {
-    viewer: {
-      prefetch: true,
-      query: gql`
-        query {
-          viewer {
-            name
-          }
-        }
-      `,
-    },
   },
 })
 </script>

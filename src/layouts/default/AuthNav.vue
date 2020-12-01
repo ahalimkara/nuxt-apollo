@@ -7,7 +7,7 @@
     </MenuItem>
     <MenuItem>
       <a href="" @click.prevent="logout">
-        {{ $t('Logout') }}
+        {{ $t('Log out') }}
       </a>
     </MenuItem>
   </Menu>
@@ -15,10 +15,10 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Cookies from 'js-cookie'
 import { Menu } from 'ant-design-vue'
 
 import Link from '../../components/Link.vue'
+import { doLogout } from '../../middleware/auth'
 
 export default Vue.extend({
   components: {
@@ -28,10 +28,10 @@ export default Vue.extend({
   },
   methods: {
     logout() {
-      Cookies.remove('accessToken')
-      this.$store.commit('SET_ACCESS_TOKEN', null)
-
-      this.$apollo.provider.defaultClient.resetStore()
+      doLogout({
+        store: this.$store,
+        apolloClient: this.$apollo.provider.defaultClient,
+      })
 
       const locale = this.$route.params.locale || ''
       const location = locale ? `/${locale}/login` : '/login'

@@ -31,6 +31,16 @@ Online demo: [https://n-a.herokuapp.com](https://n-a.herokuapp.com)
 - Hot Module Replacement (HMR)
 - [Ant Design Vue](https://www.antdv.com/)
 
+## Middlewares
+### `auth.ts`
+This is a Router middleware, it will be called for every route change. If `accessToken` exists then user data will be loaded and added to Vuex store.
+
+### `authenticated.ts`
+This middleware checks for `viewr` state, if it doesn't exit it will redirect to login page.
+
+### `guest.ts`
+This middleware does the opposite of `authenticated.ts`, if the `viewer` exits it will redirect to homepage.
+
 ## Debug
 
 ### Chrome DevTools (55+)

@@ -5,7 +5,7 @@ export default function ({
   route: { params },
   redirect,
 }: Context) {
-  if (state.accessToken) {
+  if (state.viewer) {
     return redirect('/' + (params.locale || ''))
   }
 }

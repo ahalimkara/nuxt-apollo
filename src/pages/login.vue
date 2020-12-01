@@ -65,7 +65,7 @@ import gql from 'graphql-tag'
 import Link from '../components/Link.vue'
 
 export default (Vue as ExtendedVue).extend({
-  layout: 'form',
+  layout: 'auth',
   middleware: 'guest',
   components: {
     Alert,
@@ -112,7 +112,7 @@ export default (Vue as ExtendedVue).extend({
             try {
               const result = await this.$apollo.mutate({
                 mutation: gql`
-                  mutation login($email: String!, $password: String!) {
+                  mutation($email: String!, $password: String!) {
                     login(email: $email, password: $password) {
                       accessToken: token
                     }
@@ -126,7 +126,7 @@ export default (Vue as ExtendedVue).extend({
               const { accessToken } = result.data.login
 
               Cookies.set('accessToken', accessToken, {
-                expires: 365,
+                expires: 7,
               })
               this.$store.commit('SET_ACCESS_TOKEN', accessToken)
 
