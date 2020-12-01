@@ -27,16 +27,18 @@ export default Vue.extend({
     Icon,
   },
   data() {
-    const currentLocale = (this.$route.params.locale ||
-      DEFAULT_LOCALE) as Locales
-
     return {
       localeNames: LOCALE_NAMES,
-      currentLocaleName: LOCALE_NAMES[currentLocale],
     }
+  },
+  computed: {
+    currentLocaleName() {
+      return LOCALE_NAMES[this.$store.state.locale as Locales]
+    },
   },
   methods: {
     changeLocale({ key: locale }: { key: Locales }) {
+      // TODO move path logic to a helper function
       const path = locale === DEFAULT_LOCALE ? '' : `/${locale}`
 
       const pathRegExp = new RegExp(
@@ -47,7 +49,7 @@ export default Vue.extend({
       const pathWithoutLocale = pathMatches[3] || '/'
       const location = (path + pathWithoutLocale).replace(/\/+$/, '') || '/'
 
-      window.location = (location as unknown) as Location
+      this.$router.push(location)
     },
   },
 })
