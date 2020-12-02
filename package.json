@@ -23,7 +23,7 @@
     "core-js": "^3.6.5",
     "graphql-tag": "^2.11.0",
     "js-cookie": "^2.2.1",
-    "nuxt": "^2.14.6",
+    "nuxt": "^2.14.9",
     "vue": "2.6.12",
     "vue-i18n": "^8.22.2",
     "vue-server-renderer": "2.6.12",
@@ -31,7 +31,7 @@
     "vuex": "^3.6.0"
   },
   "devDependencies": {
-    "@nuxt/types": "^2.14.6",
+    "@nuxt/types": "^2.14.9",
     "@nuxt/typescript-build": "^2.0.3",
     "@nuxtjs/eslint-config": "^3.1.0",
     "@nuxtjs/eslint-config-typescript": "^3.0.0",
