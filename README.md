@@ -41,9 +41,6 @@ This middleware checks for `viewr` state, if it doesn't exit it will redirect to
 ### `guest.ts`
 This middleware does the opposite of `authenticated.ts`, if the `viewer` exits it will redirect to homepage.
 
-### `locale.ts`
-This is a Router middleware, whenever the locale is changed it will update Vuex store and the current locale of `VueI18n` instance.
-
 ## Debug
 
 ### Chrome DevTools (55+)

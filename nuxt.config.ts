@@ -60,7 +60,7 @@ export default {
   },
 
   router: {
-    middleware: ['auth', 'locale'],
+    middleware: ['auth'],
     extendRoutes(routes: any[]) {
       routes.forEach((route: any) => {
         route.path = `${locale}${route.path}`

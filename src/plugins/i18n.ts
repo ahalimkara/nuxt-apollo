@@ -30,7 +30,7 @@ export default ({ app, store, req }: Context) => {
   })
 
   app.i18n = new VueI18n({
-    locale: store.state.locale || DEFAULT_LOCALE,
+    locale: store.state.locale,
     fallbackLocale: DEFAULT_LOCALE,
     messages,
   })

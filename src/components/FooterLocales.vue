@@ -49,6 +49,8 @@ export default Vue.extend({
       const pathWithoutLocale = pathMatches[3] || '/'
       const location = (path + pathWithoutLocale).replace(/\/+$/, '') || '/'
 
+      this.$i18n.locale = locale
+      this.$store.commit('SET_LOCALE', locale)
       this.$router.push(location)
     },
   },
