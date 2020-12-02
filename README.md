@@ -1,6 +1,9 @@
 # Nuxt Apollo
 [WIP] Vue, Nuxt.js, GraphQL, Apollo Client, TypeScript, Ant Design starter kit.
 
+GraphQL Api: [https://gql-a.herokuapp.com/graphql](https://gql-a.herokuapp.com/graphql) \
+Online demo: [https://n-a.herokuapp.com](https://n-a.herokuapp.com)
+
 ## Build Setup
 
 ``` bash
@@ -17,9 +20,6 @@ $ yarn start
 # generate static project
 $ yarn generate
 ```
-
-GraphQL Api: [https://gql-a.herokuapp.com/graphql](https://gql-a.herokuapp.com/graphql) \
-Online demo: [https://n-a.herokuapp.com](https://n-a.herokuapp.com)
 
 ## Features
 - Authentication
