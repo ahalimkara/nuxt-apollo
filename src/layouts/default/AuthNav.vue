@@ -30,7 +30,7 @@ export default Vue.extend({
     logout() {
       doLogout({
         store: this.$store,
-        apolloClient: this.$apollo.provider.defaultClient,
+        apolloClient: this.$apollo.getClient(),
       })
 
       const locale = this.$route.params.locale || ''

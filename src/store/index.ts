@@ -1,7 +1,9 @@
 import config, { Locales } from '../config'
 
+import Viewer from '../Viewer'
+
 export interface State {
-  viewer: null
+  viewer: Viewer | null
   locale: Locales
   accessToken: null | string
 }
@@ -24,7 +26,7 @@ export const mutations = {
       state.locale = locale
     }
   },
-  SET_VIEWER(state: State, viewer: null) {
+  SET_VIEWER(state: State, viewer: Viewer | null) {
     state.viewer = viewer
   },
   SET_ACCESS_TOKEN(state: State, accessToken: string | null) {

@@ -7,9 +7,11 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import Viewer from '../Viewer'
+
 export default Vue.extend({
   computed: {
-    viewer() {
+    viewer(): Viewer {
       return this.$store.state.viewer
     },
   },

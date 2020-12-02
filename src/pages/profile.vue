@@ -7,10 +7,12 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import Viewer from '../Viewer'
+
 export default Vue.extend({
   middleware: 'authenticated',
   computed: {
-    viewer() {
+    viewer(): Viewer {
       return this.$store.state.viewer
     },
   },

@@ -7,6 +7,7 @@ import { Store } from 'vuex'
 import { ApolloClient, InMemoryCache } from 'apollo-boost'
 
 import { State } from '../store'
+import Viewer from '../Viewer'
 
 const setAccessTokenCookie = ({
   res,
@@ -30,24 +31,24 @@ const setAccessTokenCookie = ({
   res.setHeader('Set-Cookie', cookies)
 }
 
-const doLogin = async ({
+export const doLogin = async ({
   store,
   apolloClient,
-  res,
   accessToken,
-  viewer,
+  res = null,
+  viewer = null,
 }: {
   store: Store<State>
   apolloClient: ApolloClient<InMemoryCache>
-  res: ServerResponse
   accessToken: string
-  viewer: any
+  res?: ServerResponse | null
+  viewer?: Viewer | null
 }) => {
   const expires = new Date()
   expires.setDate(expires.getDate() + 7)
 
   if (process.server) {
-    setAccessTokenCookie({ res, accessToken, options: { expires } })
+    res && setAccessTokenCookie({ res, accessToken, options: { expires } })
   } else {
     Cookies.set('accessToken', accessToken, { expires })
   }
